@@ -1,4 +1,4 @@
-Testing Grammers- Test on these inputs
+Testing Grammers- You can test on these inputs or any other Grammer just see the Default Considerations defined in firstnfollow_bottomUp.py
 ---------------------------------
 S->aBDh
 B->cC
