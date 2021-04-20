@@ -1,0 +1,19 @@
+A->ABd|Aa|a
+B->Be|b
+---------------------------------
+S->Sda|b
+A->Ac|Sd
+---------------------------------
+A->Br|a
+B->Cd
+C->Dt
+D->At|a
+--------------------------------
+does not have LR so it should return the same without any change 
+S->Ada|b
+A->Bc
+B->a|c
+----------------------------------
+A->Ac|Aad|bd|@
+S->Aa|b
+----------------------------------

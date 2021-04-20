@@ -1,0 +1,2 @@
+A->Ac|Aad|bd|@
+S->Aa|b
