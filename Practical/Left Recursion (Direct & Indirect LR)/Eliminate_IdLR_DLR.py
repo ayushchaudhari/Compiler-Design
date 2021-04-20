@@ -177,7 +177,9 @@ if __name__=="__main__":
     print("Encoded Dictionary:\n",encode_dictionary)
     print("Considerations are as follows-")
     for mappings in mapping_list:
-        print(mappings[0],"->",mappings[1])
+        print(mappings[0],"->",mappings[1])        
+    print("Encoded Dictionary:\n",encode_dictionary)
+    
     
     #Arbitrary Order is to be considered for indirectLR case
     #And I considered Arbitrary order as the nonTerminal defined first in dictionary as the first in the list also(highest athority of first) and nonterminal at the last is at the last of list(& has lowest authority)
