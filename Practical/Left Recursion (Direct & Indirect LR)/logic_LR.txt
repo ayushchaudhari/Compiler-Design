@@ -1,0 +1,73 @@
+A Indirect & Direct Left Recursion algorithm by Ayush Chaudhari
+Approach Used: Top Down Parsing of Symbols
+Dated:21/April/2021
+
+xxx--------------------------------------xxx-------------------------------------------xxx
+
+
+Variables and Terminalogies:
+
+Variables:
+productions --> List comprising of all the productions and a "production" is considered one of them
+dictionary --> dictionary containing key as non terminal and its value as the list of production {which is given as a input to us}
+inputWise_nonTerminals --> List of the all the keys of dictionary (i.e. all the Non Terminal or variable) are stored in the same ordered as they are inputted
+nonTerminal,rhs -> nonTerminal is used for nonTerminal & rhs is basically the production(definition) of the respective nonTerminal
+encode_dictionary -> It contains the same productions but symbols are encoded as per auto considerations (like S to be start nonterminal symbol then after that all nonTerminal starts with A,B....)
+mapping_list -> It is 2D list comprising of all the considerations (given nonterminal @ 1st index of & considered nonterminal instead of given @ 2nd index) example:[[A,S],[B,A]]
+arbNT_order -> It is list of Arbitrary order which considered by default in my algorithm as Start Nonterminal as highest order but lowest in index and last nonTerminal as lowest in order but is highest in index of list.In short (Order(nT) ∝ 1/index(nT))
+Dict_removeLR -> It is Dictionary that conprises of the grammer after eliminating Left Recursion
+
+Terminalogies:
+production -> used for denoting a single production rule. for example : {A -> B | 'Є'}
+nonTerminal -> used to denote a particular nonTerminal. for example : A,B
+rhs -> used for right hand side or definition of a nonTerminal
+mappings -> mappings is used a list of length=2 which is saved in mappings list (it has default given nonterminal @ 1st index & considered nonterminal @ 2nd index)
+expression -> expression is used for particular produce in all the produces of non-terminals {example:If S->Aab|@ then there are 2 expression->['Aab','@']} 
+exp -> used for expression only
+LR -> for left Recursion
+DLR -> Direct left recursion
+IdLR -> Indirect left recursion
+
+xxx--------------------------------------xxx-------------------------------------------xxx
+
+
+Default Consideration of My Algorithm:
+@ as Є
+S as default Start Symbol and then rest NonTerminals after that are started from A,B,C,D....and so on
+Arbitrary order to covert Indirect LR to Direct LR - Start Nonterminal('S') as highest order but lowest in index and last nonTerminal as lowest in order but is highest in index of list. i.e. (Order(nT) ∝ 1/index(nT))
+
+xxx--------------------------------------xxx-------------------------------------------xxx
+
+
+Rules to find Direct LR:
+Example: S -> S | a | b (when a nonterminal occurs in its own production definition then it is case of direct LR)
+1: If A -> Aα | β where, A is nonTerminal,α (alpha) is any expression starting with Terminal or nonterminal & similary β(Beta) is a expression starting with any terminal or non terminal(such that compulsorily nonTerminal!=A} 
+Expression after eliminating Direct LR-
+A --> βA'
+A' --> αA' | ε
+
+xxx--------------------------------------xxx-------------------------------------------xxx
+
+
+Rules to find Indirect LR:
+Example: {[A->Br|a] , [B->Cd] , [C->At]} , now here idirect LR is there as A has Br in its production i.e. B at first index and then B has Cd as its production with C at the first index and then C produces At which is having A at its first index i.e. equal to current_nonterminal we are searching LR for(i.e 'A'), So there is indirect LR 
+
+Steps to solve indirect LR
+1:Convert all the indirect ways of pointing to a production to direct way of pointing by adding that production directly to its parent instead of keeping it in some child nonTerminal's production
+for example : A->Br | a then B->Cd then C-> At , so converting this from indirect way of pointing At by nonTerminal A to direct way of pointing as shown
+B->Atd {putting C in B}
+A->Atdr {putting B in A} 
+so after converting all IdLR to DLR grammer is - A -> Atdr | a, B->Cd, C->At
+now all the indirect LR possible are converted to direct LR
+
+NOTE 1: don't get confused- 1. why C's value is not replaced in B's production by At OR 2.why A's value is not replaced in C's production
+    1. Its because B has Cd(so C is @ 1st index) but the thing is C produces At( i.e A@ 1st index which is not same as nonTerminal C). And because of our default Arbitrary order consideration A has higher order than C so if C tries to go in A for checking LR it cannot go. Since( A of At!='B'nonterminal) ,so the cycle ends here and  therefore we not replace C's value with At in B's production as it does not have any Left recursion in it i.e. it is a LR free already so no need or changing anything.
+
+    2. A's value is not replace in C's production because C is less in the order than A(order=Arbitrary order).
+    And Since Arbitraty_order('C') < Arbitraty_order('A') therfore C can't try to go inside or iterate further for LR's in the A. (this means 'C' can only iterate in the production of nonTerminals haveing lower order than it)
+
+NOTE 2: like if grammmer is - {[A->Br|a] , [B->Cd] , [C->At | a]} so now this after coverting all IdLR to DLR looks like- {[A->Atdr|a] , [B->Cd] , [C->At | a]}
+So the thing to NOTE is we only consider the expression if it has nonTerminal @ its first index and that too when it equals the parent (current_nonterminal we are searching for converting IdLR in). 
+Therefore NOTE only At is considered not a is considerd for replacing B in Br (Br is production of 'A')
+
+xxx--------------------------------------xxx-------------------------------------------xxx
