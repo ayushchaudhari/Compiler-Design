@@ -174,7 +174,6 @@ if __name__=="__main__":
         print(nonTerminal,":",dictionary[nonTerminal])
 
     encode_dictionary,mapping_list=encode(dictionary,inputWise_nonTerminals)
-    print("Encoded Dictionary:\n",encode_dictionary)
     print("Considerations are as follows-")
     for mappings in mapping_list:
         print(mappings[0],"->",mappings[1])        
