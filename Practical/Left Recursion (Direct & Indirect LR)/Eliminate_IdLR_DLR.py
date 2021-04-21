@@ -90,7 +90,7 @@ def recursive_rm_Indirect_LR(rem_IdLR_dictionary,expression,current_NT,indirect_
         if(exp[0]==current_NT):#exp[0]==currentNT means the indirectLR expression has reached to the end of its depth and now just we have to re found directly without any more idirect ways so directly add that exp at the place of the expression[0] and keep the remaining expression[1:] same             
             set_replacing_particular_expression.add(exp+remaining_expression)
 
-        elif arbNT_order.index(exp[0]) > arbNT_order.index(current_NT): #this means that currentNt should always be less in Arbitrary order from the other nonTerminal which is found #less means currentNT comes first
+        elif arbNT_order.index(exp[0]) > arbNT_order.index(indirect_NT): #this means that indirect_Nt (i.e. the not_terminal that is having exp in it) should always be greater in Arbitrary order from the other nonTerminal which is found @ exp[0] of exp #just remember that (Order(nT) ∝ 1/index(nT)) therefore the greater than condition for order is less than condition for index of list arb_NT
             set_replacing_particular_expression.update(recursive_rm_Indirect_LR(rem_IdLR_dictionary,exp,current_NT,exp[0],arbNT_order))
             #temp_list just saves the set value in it temperorily for some operations
             temp_list=list(set_replacing_particular_expression)
@@ -163,7 +163,7 @@ if __name__=="__main__":
     print("Input taken succesfully :",productions)
     
     # tokenizing
-    print("Tokenizing:")
+    print("\nTokenizing:")
     dictionary={}
     inputWise_nonTerminals=[]
     
@@ -174,10 +174,10 @@ if __name__=="__main__":
         print(nonTerminal,":",dictionary[nonTerminal])
 
     encode_dictionary,mapping_list=encode(dictionary,inputWise_nonTerminals)
-    print("Considerations are as follows-")
+    print("\nConsiderations are as follows-")
     for mappings in mapping_list:
         print(mappings[0],"->",mappings[1])        
-    print("Encoded Dictionary:\n",encode_dictionary)
+    print("\nEncoded Dictionary:",encode_dictionary)
     
     
     #Arbitrary Order is to be considered for indirectLR case
@@ -185,4 +185,4 @@ if __name__=="__main__":
     arbNT_order=[mappings[1] for mappings in mapping_list]  #arbitrary order starts always with S start symbol and goes on so 'S' in every order as per my algorithm has highest order. Order decreses as the Index of list increases
     
     Dict_removeLR=left_recursion(encode_dictionary,arbNT_order)
-    print("Dictionary after removing Left recursion is-\n",Dict_removeLR)
+    print("\nDictionary after removing Left recursion is-\n",Dict_removeLR)
