@@ -1,0 +1,5 @@
+S->TR
+R->+TR|@
+T->FY
+Y->*FY|@
+F->(S)|id
